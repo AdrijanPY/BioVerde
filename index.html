@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Verde - Frisches Bio-Gemüse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #A8D08D;
+            --light-green: #C8E6C9;
+            --dark-green: #81C784;
+            --white: #ffffff;
+            --text-dark: #2E7D32;
+            --text-light: #4CAF50;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-green) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: 0 2px 20px var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-placeholder {
+            width: 150px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .language-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-green);
+            background: var(--white);
+            color: var(--text-dark);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active,
+        .lang-btn:hover {
+            background: var(--primary-green);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--white);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px var(--shadow);
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .opening-hours {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .day-time {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Map Section */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow);
+            margin: 2rem 0;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: hue-rotate(20deg) saturate(1.1);
+        }
+
+        /* Image Slider */
+        .slider-container {
+            margin: 3rem 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow);
+            background: var(--white);
+        }
+
+.slider-wrapper {
+    display: flex;
+    width: max-content;
+    animation: none;
+    gap: 20px;
+}
+
+        .slide {
+            min-width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            margin-right: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 2rem 1rem;
+            }
+
+            .whatsapp-links {
+                flex-direction: column;
+            }
+
+            .whatsapp-btn {
+                justify-content: center;
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .slide {
+                min-width: 250px;
+                height: 150px;
+            }
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+<div class="logo-placeholder">
+    <img src="logo.png" alt="Bio Verde Logo" style="height: 90px;" />
+</div>
+
+            <div class="language-switch">
+                <button class="lang-btn active" onclick="switchLanguage('de')">DE</button>
+                <button class="lang-btn" onclick="switchLanguage('es')">ES</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 data-de="Willkommen bei Bio Verde" data-es="Bienvenidos a Bio Verde">
+                    Willkommen bei Bio Verde
+                </h1>
+                <p data-de="Frisches Bio-Gemüse direkt vom Feld zu Ihnen nach Hause" data-es="Verduras orgánicas frescas directamente del campo a su hogar">
+                    Frisches Bio-Gemüse direkt vom Feld zu Ihnen nach Hause
+                </p>
+            </section>
+
+            <!-- WhatsApp Offers Section -->
+            <section class="content-section animate-on-scroll">
+                <h2 class="section-title">
+                    <span class="emoji">🟢</span>
+                    <span data-de="NEU: Unsere Blitzangebote jetzt im WhatsApp-Status!" data-es="¡NUEVO: Nuestras ofertas relámpago ahora en el estado de WhatsApp!">
+                        NEU: Unsere Blitzangebote jetzt im WhatsApp-Status!
+                    </span>
+                </h2>
+                <p data-de="Ab sofort posten wir regelmäßig exklusive Sonderangebote, die nur wenige Stunden gültig sind – mit bis zu 60 % Rabatt! Du findest dort:" data-es="A partir de ahora publicamos regularmente ofertas especiales exclusivas, válidas solo por unas pocas horas - ¡con hasta 60% de descuento! Allí encontrarás:">
+                    Ab sofort posten wir regelmäßig exklusive Sonderangebote, die nur wenige Stunden gültig sind – mit bis zu 60 % Rabatt! Du findest dort:
+                </p>
+                <ul>
+                    <li data-de="✅ Reinigungsprodukte" data-es="✅ Productos de limpieza">✅ Reinigungsprodukte</li>
+                    <li data-de="✅ Bio-Gemüse aus eigenem Anbau" data-es="✅ Verduras orgánicas de cultivo propio">✅ Bio-Gemüse aus eigenem Anbau</li>
+                    <li data-de="✅ Bäume & Pflanzen" data-es="✅ Árboles y plantas">✅ Bäume & Pflanzen</li>
+                    <li data-de="✅ Und viele weitere Überraschungen!" data-es="✅ ¡Y muchas más sorpresas!">✅ Und viele weitere Überraschungen!</li>
+                </ul>
+                <p data-de="📌 Wichtig: Schreib uns bitte kurz per WhatsApp an, damit wir dich einspeichern können – nur dann kannst du unseren Status überhaupt sehen!" data-es="📌 Importante: Por favor escríbenos brevemente por WhatsApp para que podamos guardarte - ¡solo así podrás ver nuestro estado!">
+                    📌 <strong>Wichtig:</strong> Schreib uns bitte kurz per WhatsApp an, damit wir dich einspeichern können – nur dann kannst du unseren Status überhaupt sehen!
+                </p>
+                <p data-de="👉 Status regelmäßig checken – es lohnt sich!" data-es="👉 ¡Revisa el estado regularmente - vale la pena!">
+                    👉 Status regelmäßig checken – es lohnt sich!
+                </p>
+
+                <div class="whatsapp-links">
+                    <a href="https://wa.me/595984056664" class="whatsapp-btn">
+                        <span>📱</span>
+                        <span data-de="Direktnachricht" data-es="Mensaje directo">Direktnachricht</span>
+                    </a>
+                    <a href="https://wa.me/c/595984056664" class="whatsapp-btn">
+                        <span>🧽</span>
+                        <span data-de="Reinigungsprodukte" data-es="Productos de limpieza">Reinigungsprodukte</span>
+                    </a>
+                    <a href="https://chat.whatsapp.com/BULGeLRjC2LHkzKmyfpykd?mode=ac_t" class="whatsapp-btn">
+                        <span>🌱</span>
+                        <span data-de="Bio Verde Gruppe" data-es="Grupo Bio Verde">Bio Verde Gruppe</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Fresh Vegetables Section -->
+            <section class="content-section animate-on-scroll">
+                <h2 class="section-title">
+                    <span class="emoji">🌱</span>
+                    <span data-de="Frisches Gemüse – auch außerhalb der Öffnungszeiten!" data-es="¡Verduras frescas - incluso fuera del horario de atención!">
+                        Frisches Gemüse – auch außerhalb der Öffnungszeiten!
+                    </span>
+                </h2>
+                <p data-de="🥬🥕 Liebe Kunden, auch wenn wir nur Mittwochs und Samstags regulär geöffnet haben, könnt ihr unser frisches Bio-Gemüse jederzeit bekommen!" data-es="🥬🥕 Queridos clientes, aunque solo abrimos regularmente los miércoles y sábados, ¡pueden obtener nuestras verduras orgánicas frescas en cualquier momento!">
+                    🥬🥕 Liebe Kunden, auch wenn wir nur Mittwochs und Samstags regulär geöffnet haben, könnt ihr unser frisches Bio-Gemüse jederzeit bekommen!
+                </p>
+                <ul>
+                    <li data-de="● Kommt nach kurzer Absprache gerne vorbei" data-es="● Vengan después de una breve consulta">● Kommt nach kurzer Absprache gerne vorbei</li>
+                    <li data-de="● Oder lasst euch das Gemüse bequem nach Hause oder an einen Treffpunkt liefern" data-es="● O hagan que les entreguen las verduras cómodamente a casa o en un punto de encuentro">● Oder lasst euch das Gemüse bequem nach Hause oder an einen Treffpunkt liefern</li>
+                </ul>
+                <p data-de="📩 Einfach melden – wir freuen uns auf eure Bestellungen! 😊" data-es="📩 ¡Simplemente contáctennos - esperamos sus pedidos! 😊">
+                    📩 Einfach melden – wir freuen uns auf eure Bestellungen! 😊
+                </p>
+            </section>
+
+            <!-- Opening Hours -->
+            <section class="content-section animate-on-scroll">
+                <h2 class="section-title">
+                    <span class="emoji">🕒</span>
+                    <span data-de="Öffnungszeiten" data-es="Horarios de atención">Öffnungszeiten</span>
+                </h2>
+                <div class="opening-hours">
+                    <div class="hours-grid">
+                        <div class="day-time">
+                            <strong data-de="Mittwoch" data-es="Miércoles">Mittwoch</strong><br>
+                            <span data-de="9:00 – 12:30 Uhr" data-es="9:00 – 12:30 hrs">9:00 – 12:30 Uhr</span>
+                        </div>
+                        <div class="day-time">
+                            <strong data-de="Samstag" data-es="Sábado">Samstag</strong><br>
+                            <span data-de="9:00 – 15:00 Uhr" data-es="9:00 – 15:00 hrs">9:00 – 15:00 Uhr</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quality Guarantee -->
+            <section class="content-section animate-on-scroll">
+                <h2 class="section-title">
+                    <span class="emoji">🌱</span>
+                    <span data-de="Frische-Garantie bei Bio Verde!" data-es="¡Garantía de frescura en Bio Verde!">
+                        Frische-Garantie bei Bio Verde!
+                    </span>
+                    <span class="emoji">🥕🍅</span>
+                </h2>
+                <p data-de="Unser Bio-Gemüse ist frisch, sauber und voller Nährstoffe – ganz ohne Chemie! 💚" data-es="¡Nuestras verduras orgánicas son frescas, limpias y llenas de nutrientes - completamente sin químicos! 💚">
+                    Unser Bio-Gemüse ist frisch, sauber und voller Nährstoffe – ganz ohne Chemie! 💚
+                </p>
+                <ul>
+                    <li data-de="👉 Keine Schimmelflecken, keine faulen Stellen wie bei anderen" data-es="👉 Sin manchas de moho, sin partes podridas como en otros">👉 Keine Schimmelflecken, keine faulen Stellen wie bei anderen</li>
+                    <li data-de="👉 100 % Bio, regional angebaut, saisonal geerntet" data-es="👉 100% orgánico, cultivado regionalmente, cosechado estacionalmente">👉 100 % Bio, regional angebaut, saisonal geerntet</li>
+                    <li data-de="👉 Keine langen Transportwege – direkt vom Beet zu dir!" data-es="👉 Sin largos trayectos de transporte - ¡directamente del cultivo a ti!">👉 Keine langen Transportwege – direkt vom Beet zu dir!</li>
+                    <li data-de="👉 Wir ernten erst nach deiner Bestellung – frischer geht's nicht!" data-es="👉 ¡Solo cosechamos después de tu pedido - no puede ser más fresco!">👉 Wir ernten erst nach deiner Bestellung – frischer geht's nicht!</li>
+                </ul>
+                <p data-de="🧺✨ Mit unserer Frische-Garantie bekommst du Gemüse, wie es sein soll: gesund, lecker und natürlich." data-es="🧺✨ Con nuestra garantía de frescura obtienes verduras como deben ser: saludables, deliciosas y naturales.">
+                    🧺✨ Mit unserer Frische-Garantie bekommst du Gemüse, wie es sein soll: gesund, lecker und natürlich.
+                </p>
+                <p data-de="🙏 Danke für euer Vertrauen – euer Bio Verde Team" data-es="🙏 Gracias por su confianza - su equipo Bio Verde">
+                    🙏 Danke für euer Vertrauen – euer Bio Verde Team
+                </p>
+            </section>
+
+            <!-- Google Maps -->
+            <section class="content-section animate-on-scroll">
+                <h2 class="section-title">
+                    <span class="emoji">📍</span>
+                    <span data-de="Unser Standort" data-es="Nuestra ubicación">Unser Standort</span>
+                </h2>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3552.780013171896!2d-55.66567!3d-27.068690999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjfCsDA0JzA3LjMiUyA1NcKwMzknNTYuNCJX!5e0!3m2!1ses-419!2spy!4v1754422338207!5m2!1ses-419!2spy"
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </section>
+
+            <!-- Image Slider -->
+            <section class="slider-container">
+<div class="slider-wrapper">
+    <div class="slide"><img src="bild1.jpg" alt="Bild 1" style="width:100%; height:100%; object-fit:cover; border-radius:15px;" /></div>
+    <div class="slide"><img src="bild2.jpg" alt="Bild 2" style="width:100%; height:100%; object-fit:cover; border-radius:15px;" /></div>
+    <div class="slide"><img src="bild3.jpg" alt="Bild 3" style="width:100%; height:100%; object-fit:cover; border-radius:15px;" /></div>
+	<div class="slide"><img src="bild4.jpg" alt="Bild 4" style="width:100%; height:100%; object-fit:cover; border-radius:15px;" /></div>
+</div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p data-de="© 2025 Bio Verde - Frisches Bio-Gemüse mit Herz und Leidenschaft" data-es="© 2025 Bio Verde - Verduras orgánicas frescas con corazón y pasión">
+                © 2025 Bio Verde - Frisches Bio-Gemüse mit Herz und Leidenschaft
+            </p>
+            <p data-de="Hohenau, Itapúa, Paraguay" data-es="Hohenau, Itapúa, Paraguay">
+                Hohenau, Itapúa, Paraguay
+            </p>
+        </div>
+    </footer>
+<script>
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    const slides = Array.from(sliderWrapper.children);
+
+    // Klone alle Slides und füge sie hinten an (für Endlos-Effekt)
+    slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        sliderWrapper.appendChild(clone);
+    });
+
+    let scrollPosition = 0;
+
+    function animateSlider() {
+        scrollPosition += 0.32;
+        if (scrollPosition >= sliderWrapper.scrollWidth / 2) {
+            scrollPosition = 0;
+        }
+        sliderWrapper.style.transform = `translateX(-${scrollPosition}px)`;
+        requestAnimationFrame(animateSlider);
+    }
+
+    animateSlider();
+</script>
+    <script>
+        // Language Detection and Switching
+        function detectBrowserLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            return browserLang.startsWith('es') ? 'es' : 'de';
+        }
+
+        function switchLanguage(lang) {
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-de]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Store language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize language on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const initialLang = savedLang || detectBrowserLanguage();
+            
+            // Set initial language without event
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === initialLang.toUpperCase()) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (initialLang === 'es') {
+                document.querySelectorAll('[data-de]').forEach(element => {
+                    if (element.hasAttribute('data-es')) {
+                        element.textContent = element.getAttribute('data-es');
+                    }
+                });
+                document.documentElement.lang = 'es';
+            }
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animate-on-scroll elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth hover effects for content sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            section.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.2}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
